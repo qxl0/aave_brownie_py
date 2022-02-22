@@ -7,3 +7,12 @@ def main():
   erc20_address = config["networks"][network.show_active()]["weth_token"]
   if network.show_active() in ["mainnet-fork-dev"]:
     get_weth()
+  lending_pool = get_lending_pool()
+
+def get_lending_pool():
+  # ABI
+  # Address
+  lending_pool_addresses_provider = interface.ILendingPoolAddressesProvider(
+    config["network"][network.show_active()]["lending_pool_addresses_provider"]
+  )
+  lending_pool_address = lending_pool_addresses_provider.getLendingPool()
