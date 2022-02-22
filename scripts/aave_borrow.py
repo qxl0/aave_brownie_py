@@ -40,6 +40,20 @@ def main():
   borrow_tx.wait(1)
   print("We borrowed some DAI!")
   get_borrowable_data(lending_pool, account)
+  repay_all(amount, lending_pool, account)
+
+def repay_all(amount, lending_pool, account):
+  approve_erc20(Web3.toWei(amount, "ether"), lending_pool, config["networks"][network.show_active()]["dai_token"],
+  account)
+  repay_tx = lending_pool.repay(
+    config["networks"][network.show_active()]["dai_token"],
+    amount,
+    1,
+    account.address,
+    {"from": account}
+  )
+  repay_tx.wait(1)
+  print("We repaid!")
 
 def get_asset_price(price_deed_address):
   dai_eth_price_feed = interface.AggregatorV3Interface(price_deed_address)
